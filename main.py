@@ -40,8 +40,6 @@ def executer():
                 tableau_val[pointeur] = int(input("Entrée byte: "))
             except ValueError:
                 print("Une erreur est survenue. L'entrée attendue est un nombre entre 0 et 255 !")
-            finally:
-                parcours += 1
         elif signe == "[" and tableau_val[pointeur] == 0:
             parcours = boucle["fin"]
         elif signe == "]" and tableau_val[pointeur] != 0:
