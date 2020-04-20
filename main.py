@@ -18,8 +18,7 @@ def executer():
         if signe == '+':
             tableau_val[pointeur] += 1 if tableau_val[pointeur] < 255 else 0
         elif signe == '-':
-            if tableau_val[pointeur] > 0:
-                tableau_val[pointeur] -= 1
+            tableau_val[pointeur] -= 1 if tableau_val[pointeur] > 0 else -255
         elif signe == '>':
             if pointeur + 1 == len(tableau_val):
                 tableau_val.append(0)
@@ -46,16 +45,13 @@ def executer():
 
 
 def trouver_boucle():
-    boucle, temp, cpt = [], [], 0
+    boucle, temp = [], []
     for index, signe in enumerate(code):
-        print(cpt)
         if signe == '[':
             temp.append(index)
-            cpt += 1
         elif signe == ']':
             debut = temp.pop()
-            boucle[cpt - 1] = {'debut': debut, 'fin': index}
-    print(boucle)
+            boucle.append({'debut': debut, 'fin': index})
     return boucle
 
 
