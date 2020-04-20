@@ -16,16 +16,15 @@ def executer():
     while parcours < len(code):
         signe = code[parcours]
         if signe == '+':
-            tableau_val[pointeur] += 1 if tableau_val[pointeur] < 255 else 0
+            tableau_val[pointeur] += 1 if tableau_val[pointeur] < 255 else -255  # 255 += -255 = -255
         elif signe == '-':
-            tableau_val[pointeur] -= 1 if tableau_val[pointeur] > 0 else -255
+            tableau_val[pointeur] -= 1 if tableau_val[pointeur] > 0 else -255  # 0 -= -255 = 255
         elif signe == '>':
             if pointeur + 1 == len(tableau_val):
                 tableau_val.append(0)
             pointeur += 1
-        elif signe == '<':
-            if not pointeur - 1 == -1:
-                pointeur -= 1
+        elif signe == '<' and not pointeur == 0:
+            pointeur -= 1
         elif signe == '.':
             print(chr(tableau_val[pointeur]), end='')
         elif signe == ',':
@@ -52,6 +51,7 @@ def trouver_boucle():
         elif signe == ']':
             debut = temp.pop()
             boucle.append({'debut': debut, 'fin': index})
+    print(boucle)
     return boucle
 
 
