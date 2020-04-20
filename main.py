@@ -22,17 +22,15 @@ def executer():
     while parcours < len(code):
         signe = code[parcours]
         if signe == "+":
-            tableau_val[pointeur] += 1 if tableau_val[pointeur] < 255 else 0
-        elif signe == "-":
-            if tableau_val[pointeur] > 0:
-                tableau_val[pointeur] -= 1
+            tableau_val[pointeur] += 1 if tableau_val[pointeur] < 255 else -255  # 255 += -255 = -255
+        elif signe == '-':
+            tableau_val[pointeur] -= 1 if tableau_val[pointeur] > 0 else -255  # 0 -= -255 = 255
         elif signe == ">":
             if pointeur + 1 == len(tableau_val):
                 tableau_val.append(0)
             pointeur += 1
-        elif signe == "<":
-            if not pointeur - 1 == -1:
-                pointeur -= 1
+        elif signe == "<" and not pointeur == 0:
+            pointeur -= 1
         elif signe == ".":
             print(chr(tableau_val[pointeur]), end="")
         elif signe == ",":

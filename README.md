@@ -3,9 +3,9 @@ Un interpréteur BrainFuck fait en Python.
 
 ➡ Mettre le code dans "**bf.txt**".
 
-⚠ Ne pas imbriquer plusieurs boucles pour le moment. ⚠
+⚠ **Ne pas utiliser plusieurs boucles pour le moment.** ⚠
 
-__Aide :__
+**Aide :**
 
 ⚠ Une variable ne peut dépasser 1 octet (0-255).
 
