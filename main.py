@@ -1,23 +1,19 @@
 tableau_val = [0]
 parcours, pointeur = 0, 0
-code = ""
 
 
 def lire(file_name: str):
     with open(file_name, 'r') as fichier:
-        global code
-        code = "".join(fichier.readlines())
-        nettoyer()
+        return "".join(fichier.readlines())
 
 
-def nettoyer():
-    global code
-    code = ''.join(filter(lambda x: x in ['.', ',', '[', ']', '<', '>', '+', '-'], code))
+def nettoyer(code: str) -> str:
+    return ''.join(filter(lambda x: x in ['.', ',', '[', ']', '<', '>', '+', '-'], code))
 
 
-def executer():
-    global code, pointeur, parcours
-    boucle = trouver_boucle()
+def executer(code):
+    global pointeur, parcours
+    boucle = trouver_boucle(code)
 
     while parcours < len(code):
         signe = code[parcours]
@@ -46,8 +42,7 @@ def executer():
         parcours += 1
 
 
-def trouver_boucle():
-    global code
+def trouver_boucle(code):
     boucle = {}
     for index, signe in enumerate(code):
         if signe == "[":
@@ -59,5 +54,5 @@ def trouver_boucle():
 
 if __name__ == '__main__':
     import sys
-    lire(sys.argv[1] if len(sys.argv) > 1 else 'test.bf')
-    executer()
+    executer(nettoyer(lire(sys.argv[1] if len(sys.argv) > 1 else 'test.bf')))
+
