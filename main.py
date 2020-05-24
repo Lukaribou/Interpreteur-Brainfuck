@@ -3,8 +3,8 @@ parcours, pointeur = 0, 0
 code = ""
 
 
-def lire():
-    with open('./bf.txt', 'r') as fichier:
+def lire(file_name: str):
+    with open(file_name, 'r') as fichier:
         global code
         code = "".join(fichier.readlines())
         nettoyer()
@@ -57,5 +57,7 @@ def trouver_boucle():
     return boucle
 
 
-lire()
-executer()
+if __name__ == '__main__':
+    import sys
+    lire(sys.argv[1] if len(sys.argv) > 1 else 'test.bf')
+    executer()
