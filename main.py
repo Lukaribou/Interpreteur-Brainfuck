@@ -1,5 +1,3 @@
-
-
 def lire(file_name: str) -> str:
     with open(file_name, 'r') as fichier:
         print(f'Lecture de \"{file_name}\"...')
@@ -36,35 +34,27 @@ def executer(code: str) -> None:
             except ValueError:
                 print('Une erreur est survenue. L\'entrée attendue est un nombre entre 0 et 255 !')
                 break
-        elif signe == '[':
-            if tableau_val[pointeur] == 0:
-                parcours = boucles[boucle_cptr]['fin']
-                boucle_cptr -= 1
-            else:
-                boucle_cptr += 1
+        elif signe == '[' and tableau_val[pointeur] == 0:
+            parcours = boucles[parcours]
         elif signe == ']' and tableau_val[pointeur] != 0:
-            parcours = boucles[boucle_cptr - 1]['debut']
+            parcours = boucles[parcours]
 
         parcours += 1
 
 
 def trouver_boucle(code: str):
-    boucles, cptr = [], 0
+    temp, boucles = [], {}
     for index, signe in enumerate(code):
         if signe == '[':
-            boucles.append({
-                'debut': index,
-                'fin': None
-            })
-            cptr += 1
-        if signe == ']':
-            cptr -= 1
-            boucles[cptr]['fin'] = index
-    print(boucles)
+            temp.append(index)
+        elif signe == ']':
+            x = temp.pop()
+            boucles[x] = index
+            boucles[index] = x
     return boucles
 
 
 if __name__ == '__main__':
     import sys
-    executer(nettoyer(lire(sys.argv[1] if len(sys.argv) > 1 else 'test.bf')))
 
+    executer(nettoyer(lire(sys.argv[1] if len(sys.argv) > 1 else 'main.bf')))
