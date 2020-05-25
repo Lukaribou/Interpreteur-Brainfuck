@@ -1,18 +1,20 @@
 tableau_val = [0]
-parcours, pointeur = 0, 0
 
 
 def lire(file_name: str):
     with open(file_name, 'r') as fichier:
+        print(f"Lecture de \"{file_name}\"...")
         return "".join(fichier.readlines())
 
 
 def nettoyer(code: str) -> str:
+    print("Nettoyage du code...")
     return ''.join(filter(lambda x: x in ['.', ',', '[', ']', '<', '>', '+', '-'], code))
 
 
 def executer(code):
-    global pointeur, parcours
+    print("Interpretation...\n")
+    parcours, pointeur = 0, 0
     boucle = trouver_boucle(code)
 
     while parcours < len(code):
@@ -43,13 +45,13 @@ def executer(code):
 
 
 def trouver_boucle(code):
-    boucle = {}
+    boucles = {}
     for index, signe in enumerate(code):
         if signe == "[":
-            boucle["debut"] = index
+            boucles["debut"] = index
         if signe == "]":
-            boucle["fin"] = index
-    return boucle
+            boucles["fin"] = index
+    return boucles
 
 
 if __name__ == '__main__':
