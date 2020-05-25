@@ -46,6 +46,7 @@ def executer(code: str) -> None:
 
 
 if __name__ == '__main':
-    import sys
-    from main import lire
-    executer(nettoyer(lire(sys.argv[1] if len(sys.argv) > 1 else 'main.bf')))
+    from sys import argv
+    from menu import lire
+
+    executer(nettoyer(lire(argv[1] if len(argv) > 1 else 'main.bf')))

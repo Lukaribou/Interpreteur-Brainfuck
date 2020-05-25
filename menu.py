@@ -7,6 +7,7 @@ def lire(file_name: str) -> str:
 
 
 if __name__ == '__main__':
+    import sys
     from interpreteur import *
-
-    executer(nettoyer(lire(sys.argv[1] if len(sys.argv) > 1 else 'main.bf')))
+    cible = sys.argv[1] if len(sys.argv) > 1 else 'main.bf'
+    executer(nettoyer(lire(cible)))
