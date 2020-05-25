@@ -1,7 +1,6 @@
-tableau_val = [0]
 
 
-def lire(file_name: str):
+def lire(file_name: str) -> str:
     with open(file_name, 'r') as fichier:
         print(f"Lecture de \"{file_name}\"...")
         return "".join(fichier.readlines())
@@ -12,9 +11,9 @@ def nettoyer(code: str) -> str:
     return ''.join(filter(lambda x: x in ['.', ',', '[', ']', '<', '>', '+', '-'], code))
 
 
-def executer(code):
+def executer(code) -> None:
     print("Interpretation...\n")
-    parcours, pointeur = 0, 0
+    parcours, pointeur, tableau_val = 0, 0, [0]
     boucle = trouver_boucle(code)
 
     while parcours < len(code):
@@ -36,6 +35,7 @@ def executer(code):
                 tableau_val[pointeur] = int(input("Entrée byte: "))
             except ValueError:
                 print("Une erreur est survenue. L'entrée attendue est un nombre entre 0 et 255 !")
+                break
         elif signe == "[" and tableau_val[pointeur] == 0:
             parcours = boucle["fin"]
         elif signe == "]" and tableau_val[pointeur] != 0:
