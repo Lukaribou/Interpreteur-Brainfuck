@@ -52,8 +52,8 @@ def interpreter(code: str) -> None:
         # TODO: Détecter et gérer les boucles infinies
 
 
-def executer():
-    interpreter(nettoyer(lire(input('Quel fichier voulez vous interpreter ? '))))
+def executer() -> None:
+    interpreter(nettoyer(lire(input('Quel fichier voulez-vous interpreter ? '))))
 
 
 if __name__ == '__main':

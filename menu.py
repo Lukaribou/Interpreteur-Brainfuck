@@ -30,20 +30,26 @@ def demander(question, verif=(lambda rep: True if str.lower(rep) in ['n', 'y'] e
             return rep
 
 
-def lire(file_name: str) -> str:
-    """Lis le fichier et renvoie son contenu sous la forme d'une seule string"""
-    if (not file_name.endswith('.bf')) or (not file_name.endswith('.txt')):
-        if '.' in file_name:
-            print(f"L'extension '.{file_name.split('.', 1)[1]}' m'est inconnue.")
+def formatter_nom_fichier(nom: str) -> str:
+    """Gère le nom du fichier"""
+    if (not nom.endswith('.bf')) and (not nom.endswith('.txt')):
+        if '.' in nom:
+            print(f"L'extension '.{nom.split('.', 1)[1]}' m'est inconnue.")
             exit(1)
         else:
-            file_name += '.bf'
+            nom += '.bf'
+    return nom
+
+
+def lire(nom: str) -> str:
+    """Lis le fichier et renvoie son contenu sous la forme d'une seule string"""
+    nom = formatter_nom_fichier(nom)
     try:
-        with open(file_name, 'r') as fichier:
-            print(f'Lecture de \"{file_name}\"...')
+        with open(nom, 'r') as fichier:
+            print(f'Lecture de \"{nom}\"...')
             return ''.join(fichier.readlines())
     except FileNotFoundError:
-        print(f'Le fichier \'{file_name}\' est introuvable.')
+        print(f'Le fichier \'{nom}\' est introuvable.')
         exit(404)
 
 
