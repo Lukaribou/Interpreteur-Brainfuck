@@ -46,6 +46,8 @@ def interpreter(code: str) -> None:
 
         parcours += 1
 
+        # TODO: Détecter et gérer les boucles infinies
+
 
 if __name__ == '__main':
     from sys import argv

@@ -12,6 +12,8 @@ def afficher_menu() -> None:
     # str.isnumeric() -> https://www.geeksforgeeks.org/python-string-isnumeric-application/
     print('')  # afficher une ligne vide en dessous de la question
 
+    # TODO: Rediriger vers le bon fichier en fonction du choix
+
 
 def demander(question, verif=(lambda rep: True if str.lower(rep) in ['n', 'y'] else False)) -> str:
     """Pose la question jusqu'à ce que la verif renvoie True

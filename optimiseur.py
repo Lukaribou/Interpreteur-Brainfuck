@@ -1,5 +1,8 @@
 def optimiser(code: str) -> None:
     """Optimise le code directement dans le fichier"""
+    # TODO: Optimiser le code directement dans le fichier
+    # TODO: 1 espace tous les 5 + ou -
+    # TODO: Retour à la ligne quand ouverture et fermeture de boucle \ Garder les possibles commentaires sur la ligne
     pass
 
 
