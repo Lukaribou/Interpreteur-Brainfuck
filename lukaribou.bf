@@ -20,3 +20,5 @@
 >--.
 >+.
 >---.
+
+Ce script affiche 'Lukaribou'
