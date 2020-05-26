@@ -9,7 +9,7 @@ def nettoyer(code: str) -> str:
 
 def interpreter(code: str) -> None:
     """Interprête le code qui lui est donné"""
-    print('Interpretation...\n')
+    print('Interpretation:\n')
     parcours, pointeur, tableau_val = 0, 0, [0]
 
     temp, boucles = [], {}
