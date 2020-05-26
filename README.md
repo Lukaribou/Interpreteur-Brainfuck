@@ -16,7 +16,7 @@ Un interpréteur BrainFuck fait en Python.
 
 * "." - Affiche le caractère ASCII correspondant à la valeur de la case où se trouve le pointeur.
 
-* "," - Prend 1 octet en entrée et le stock dans la case où se trouve le pointeur.
+* "," - Prends 1 octet en entrée et le stock dans la case où se trouve le pointeur.
 
 * "[" et "]" - Réitère le code entre [ et ] tant que la valeur au pointeur n'est pas égale à 0.
 

@@ -1,9 +1,11 @@
 def nettoyer(code: str) -> str:
+    """Enlève tous les caractères ne faisant pas partie de ceux du BrainFuck"""
     print('Nettoyage du code...')
     return ''.join(filter(lambda x: x in ['.', ',', '[', ']', '<', '>', '+', '-'], code))
 
 
-def executer(code: str) -> None:
+def interpreter(code: str) -> None:
+    """Interprête le code qui lui est donné"""
     print('Interpretation...\n')
     parcours, pointeur, tableau_val = 0, 0, [0]
 
@@ -20,9 +22,9 @@ def executer(code: str) -> None:
     while parcours < len(code):
         signe = code[parcours]
         if signe == '+':
-            tableau_val[pointeur] += 1 if tableau_val[pointeur] < 255 else -255  # 255 += -255 = -255
+            tableau_val[pointeur] += 1 if tableau_val[pointeur] < 255 else -255  # 255 += -255 = 0
         elif signe == '-':
-            tableau_val[pointeur] -= 1 if tableau_val[pointeur] > 0 else -255  # 0 -= -255 = 255
+            tableau_val[pointeur] -= 1 if tableau_val[pointeur] > 0 else -255  # 0 -= -255 = +255
         elif signe == '>':
             if pointeur + 1 == len(tableau_val):
                 tableau_val.append(0)
@@ -49,4 +51,4 @@ if __name__ == '__main':
     from sys import argv
     from menu import lire
 
-    executer(nettoyer(lire(argv[1] if len(argv) > 1 else 'main.bf')))
+    interpreter(nettoyer(lire(argv[1] if len(argv) > 1 else 'main.bf')))
