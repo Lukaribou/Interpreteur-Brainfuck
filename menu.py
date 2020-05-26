@@ -32,6 +32,12 @@ def demander(question, verif=(lambda rep: True if str.lower(rep) in ['n', 'y'] e
 
 def lire(file_name: str) -> str:
     """Lis le fichier et renvoie son contenu sous la forme d'une seule string"""
+    if (not file_name.endswith('.bf')) or (not file_name.endswith('.txt')):
+        if '.' in file_name:
+            print(f"L'extension '.{file_name.split('.', 1)[1]}' m'est inconnue.")
+            exit(1)
+        else:
+            file_name += '.bf'
     try:
         with open(file_name, 'r') as fichier:
             print(f'Lecture de \"{file_name}\"...')

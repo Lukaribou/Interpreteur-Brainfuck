@@ -3,6 +3,7 @@ def optimiser(code: str) -> None:
     # TODO: Optimiser le code directement dans le fichier
     # TODO: 1 espace tous les 5 + ou -
     # TODO: Retour à la ligne quand ouverture et fermeture de boucle \ Garder les possibles commentaires sur la ligne
+    # TODO: Retour à la ligne après un . ou une ,
     pass
 
 
