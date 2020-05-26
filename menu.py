@@ -1,18 +1,23 @@
 def afficher_menu() -> None:
     """Affiche le menu et attend un choix"""
 
+    menu = {
+        'Quitter': __import__('sys').exit,
+        'Interpreter': __import__('interpreteur').executer,
+        'Optimiser':  __import__('optimiseur').executer
+    }
+
     print('\n** Menu **\n')
-    menu = ['Interpreter', 'Optimiser']
     for k, v in enumerate(menu):
         print(f'{k}: {v}')
     print('')  # afficher une ligne vide entre la liste et la question
-
     choix = demander('Choisissez l\'action que vous souhaitez faire sur votre fichier: ',
                      lambda rep: True if str.isnumeric(rep) and 0 <= int(rep) < len(menu) else False)
-    # str.isnumeric() -> https://www.geeksforgeeks.org/python-string-isnumeric-application/
     print('')  # afficher une ligne vide en dessous de la question
 
-    # TODO: Rediriger vers le bon fichier en fonction du choix
+    for index, v in enumerate(menu):  # (v = 'Quitter'...)
+        if index == int(choix):
+            menu[v]()  # execute la fonction associée
 
 
 def demander(question, verif=(lambda rep: True if str.lower(rep) in ['n', 'y'] else False)) -> str:

@@ -6,6 +6,11 @@ def optimiser(code: str) -> None:
     pass
 
 
+def executer():
+    pass
+    # TODO: pouvoir choisir ce qu'on veut optimiser
+
+
 if __name__ == '__main__':
     from sys import argv
     from menu import lire

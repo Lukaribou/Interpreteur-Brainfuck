@@ -1,3 +1,6 @@
+from menu import lire
+
+
 def nettoyer(code: str) -> str:
     """Enlève tous les caractères ne faisant pas partie de ceux du BrainFuck"""
     print('Nettoyage du code...')
@@ -49,8 +52,11 @@ def interpreter(code: str) -> None:
         # TODO: Détecter et gérer les boucles infinies
 
 
+def executer():
+    interpreter(nettoyer(lire(input('Quel fichier voulez vous interpreter ? '))))
+
+
 if __name__ == '__main':
     from sys import argv
-    from menu import lire
 
     interpreter(nettoyer(lire(argv[1] if len(argv) > 1 else 'main.bf')))
