@@ -32,9 +32,13 @@ def demander(question, verif=(lambda rep: True if str.lower(rep) in ['n', 'y'] e
 
 def lire(file_name: str) -> str:
     """Lis le fichier et renvoie son contenu sous la forme d'une seule string"""
-    with open(file_name, 'r') as fichier:
-        print(f'Lecture de \"{file_name}\"...')
-        return ''.join(fichier.readlines())
+    try:
+        with open(file_name, 'r') as fichier:
+            print(f'Lecture de \"{file_name}\"...')
+            return ''.join(fichier.readlines())
+    except FileNotFoundError:
+        print(f'Le fichier \'{file_name}\' est introuvable.')
+        exit(404)
 
 
 if __name__ == '__main__':
