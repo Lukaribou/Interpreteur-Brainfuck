@@ -37,31 +37,32 @@ def finitions(code: str) -> str:
 def sauvegarder(code: str) -> None:
     try:
         with open(fichier, 'w') as fic:
-            content['commentaires'] = " ".join([x.strip() for x in content['commentaires'].split(" ")])
+            print(content['commentaires'])
+            content['commentaires'] = ''.join(content['commentaires'])
             if content['commentaires'] != '':
-                x = content['commentaires'].find('## Commentaires: ##') # index si il trouve, -1 sinon
+                x = content['commentaires'].find('## Commentaires')  # index si il trouve, -1 sinon
                 if x == -1:
                     code = code + "\n\n## Commentaires (Anciennes lignes) ##\n" + content['commentaires']
                 else:
-                    code = code + content['commentaires']
+                    code = code + "\n\n" + content['commentaires']
             fic.write(code)
             print('Votre fichier a bien ete optimise !')
     except FileNotFoundError:
         print(f'Le fichier {fichier} est introuvable')
 
 
-def separer(content: str) -> dict:
+def separer(contenant: str) -> dict:
     d = {'code': '', 'commentaires': ''}
-    print("Séparation du code et des commentaires...")
-    ligne = 0
-    for cpt, ligne in enumerate(content.split("\n")):
+    print("Separation du code et des commentaires...")
+    for cpt, ligne in enumerate(contenant.splitlines()):
         if ligne.strip().startswith('##'):
+            d['commentaires'] = "\n".join(contenant.splitlines()[cpt:])
             break
         for index, c in enumerate(ligne):
             if c in ['.', ',', '[', ']', '<', '>', '+', '-']:
                 d['code'] += c
             elif c == "#":
-                d['commentaires'] += f'Ligne {cpt}: {ligne[index:]}\n'
+                d['commentaires'] += f'Ligne {cpt + 1}:{ligne[index + 1:]}\n'
                 break
             else:
                 continue
@@ -70,7 +71,6 @@ def separer(content: str) -> dict:
 
 def executer(fl=None) -> None:
     from menu import lire, formatter_nom_fichier
-    from interpreteur import nettoyer
     global fichier, content
     fichier = formatter_nom_fichier(fl if fl else input('Quel fichier voulez-vous optimiser ? '))
     content = separer(lire(fichier))
@@ -78,11 +78,11 @@ def executer(fl=None) -> None:
 
     # TODO: pouvoir choisir ce qu'on veut optimiser
     # TODO: ne pas supprimer les commentaires
+    # TODO: mettre les opérations effectuées dans un logs.txt
 
 
 if __name__ == '__main__':
     from sys import argv
-    from menu import lire
     from constants import DEFAULT_PATH, DEFAULT_FOLDER
 
     executer(DEFAULT_FOLDER + argv[1] if len(argv) > 1 else DEFAULT_PATH)
