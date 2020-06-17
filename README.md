@@ -1,7 +1,8 @@
 # Interpreteur-Brainfuck
 Un interpréteur BrainFuck fait en Python.
 
-➡ Si vous ne spécifiez pas de fichier (ex: py main.py lukaribou.bf), le code exécuté sera "**main.bf**".
+➡ Mettez les **fichiers .bf** à exécuter dans le dossier **bf**.
+➡ Si vous ne spécifiez pas de fichier (ex: **py main.py lukaribou.bf**), le code exécuté sera "**main.bf**".
 
 **Aide :**
 
