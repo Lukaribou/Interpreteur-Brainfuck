@@ -54,7 +54,8 @@ def lire(nom: str) -> str:
 
 
 if __name__ == '__main__':
-    import sys
+    from sys import argv
+    from constants import DEFAULT_PATH
 
-    cible = sys.argv[1] if len(sys.argv) > 1 else 'main.bf'
+    cible = argv[1] if len(argv) > 1 else DEFAULT_PATH
     afficher_menu()

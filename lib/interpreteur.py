@@ -58,5 +58,6 @@ def executer() -> None:
 
 if __name__ == '__main':
     from sys import argv
+    from constants import DEFAULT_PATH
 
-    interpreter(nettoyer(lire(argv[1] if len(argv) > 1 else 'main.bf')))
+    interpreter(nettoyer(lire(argv[1] if len(argv) > 1 else DEFAULT_PATH)))
