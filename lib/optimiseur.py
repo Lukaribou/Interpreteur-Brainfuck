@@ -1,5 +1,5 @@
 fichier = ''
-content = None
+content = {}
 
 
 def optimiser(code: str) -> None:
