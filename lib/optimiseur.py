@@ -42,11 +42,11 @@ def sauvegarder(code: str) -> None:
         print(f'Le fichier {fichier} est introuvable')
 
 
-def executer() -> None:
+def executer(fl=None) -> None:
     from menu import lire, formatter_nom_fichier
     from interpreteur import nettoyer
     global fichier
-    fichier = formatter_nom_fichier(input('Quel fichier voulez-vous optimiser ? '))
+    fichier = formatter_nom_fichier(fl if fl else input('Quel fichier voulez-vous optimiser ? '))
     optimiser(nettoyer(lire(fichier)))
     # TODO: pouvoir choisir ce qu'on veut optimiser
     # TODO: ne pas supprimer les commentaires
@@ -57,4 +57,4 @@ if __name__ == '__main__':
     from menu import lire
     from constants import DEFAULT_PATH, DEFAULT_FOLDER
 
-    optimiser(lire(DEFAULT_FOLDER + argv[1] if len(argv) > 1 else DEFAULT_PATH))
+    executer(DEFAULT_FOLDER + argv[1] if len(argv) > 1 else DEFAULT_PATH)
