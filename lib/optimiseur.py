@@ -1,4 +1,5 @@
 fichier = ''
+content = None
 
 
 def optimiser(code: str) -> None:
@@ -36,18 +37,45 @@ def finitions(code: str) -> str:
 def sauvegarder(code: str) -> None:
     try:
         with open(fichier, 'w') as fic:
+            content['commentaires'] = " ".join([x.strip() for x in content['commentaires'].split(" ")])
+            if content['commentaires'] != '':
+                x = content['commentaires'].find('## Commentaires: ##') # index si il trouve, -1 sinon
+                if x == -1:
+                    code = code + "\n\n## Commentaires (Anciennes lignes) ##\n" + content['commentaires']
+                else:
+                    code = code + content['commentaires']
             fic.write(code)
             print('Votre fichier a bien ete optimise !')
     except FileNotFoundError:
         print(f'Le fichier {fichier} est introuvable')
 
 
+def separer(content: str) -> dict:
+    d = {'code': '', 'commentaires': ''}
+    print("Séparation du code et des commentaires...")
+    ligne = 0
+    for cpt, ligne in enumerate(content.split("\n")):
+        if ligne.strip().startswith('##'):
+            break
+        for index, c in enumerate(ligne):
+            if c in ['.', ',', '[', ']', '<', '>', '+', '-']:
+                d['code'] += c
+            elif c == "#":
+                d['commentaires'] += f'Ligne {cpt}: {ligne[index:]}\n'
+                break
+            else:
+                continue
+    return d
+    
+
 def executer(fl=None) -> None:
     from menu import lire, formatter_nom_fichier
     from interpreteur import nettoyer
-    global fichier
+    global fichier, content
     fichier = formatter_nom_fichier(fl if fl else input('Quel fichier voulez-vous optimiser ? '))
-    optimiser(nettoyer(lire(fichier)))
+    content = separer(lire(fichier))
+    optimiser(content['code'])
+
     # TODO: pouvoir choisir ce qu'on veut optimiser
     # TODO: ne pas supprimer les commentaires
 

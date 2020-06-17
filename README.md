@@ -4,6 +4,8 @@ Un interpréteur BrainFuck fait en Python.
 ➡ Mettez les **fichiers .bf** à exécuter dans le dossier **bf**.
 ➡ Si vous ne spécifiez pas de fichier (ex: **py main.py lukaribou.bf**), le code exécuté sera "**main.bf**".
 
+⚠ Si vous souhaitez ajouter des commentaires et faire qu'ils ne soient pas supprimés par l'optimiseur, précédez les d'un #
+
 **Aide :**
 
 ⚠ Une variable ne peut dépasser 1 octet (0-255).
