@@ -55,6 +55,6 @@ def executer() -> None:
 if __name__ == '__main__':
     from sys import argv
     from menu import lire
-    from constants import DEFAULT_PATH
+    from constants import DEFAULT_PATH, DEFAULT_FOLDER
 
-    optimiser(lire(argv[1] if len(argv) > 1 else DEFAULT_PATH))
+    optimiser(lire(DEFAULT_FOLDER + argv[1] if len(argv) > 1 else DEFAULT_PATH))
