@@ -1,83 +1,77 @@
-fichier = ''
-content = {}
+class Optimiseur:
+    def __init__(self, fichier=None) -> None:
+        from menu import formatter_nom_fichier
+        self._fichier = formatter_nom_fichier(fichier if fichier else input('Quel fichier voulez-vous optimiser ? '))
+        self._content = {
+            'code': '',
+            'commentaires': ''
+        }
 
+    def executer(self) -> None:
+        """Optimise le code en utilisant toutes les fonctions"""
+        from menu import lire
+        self.separer(lire(self._fichier))
 
-def optimiser(code: str) -> None:
-    """Optimise le code en utilisant toutes les fonctions"""
-    print('Optimisation...')
-    sauvegarder(finitions(retour_ligne(espacer(code))))
+        print('Optimisation...')
+        self.espacer()
+        self.retour_ligne()
+        self.finitions()
+        self.sauvegarder()
 
+    def espacer(self) -> None:
+        """Place des espaces à certains endroits pour rendre le code plus lisible"""
+        from re import compile
+        temp = compile(r'(-----|\+\+\+\+\+)').split(self._content['code'])
+        for i, v in enumerate(temp):
+            if v == '' or v == ' ':  # enlever les vides
+                del temp[i]
+        self._content['code'] = ' '.join(temp)
 
-def espacer(code: str) -> str:
-    """Place des espaces à certains endroits pour rendre le code plus lisible"""
-    from re import compile
-    temp = compile(r'(-----|\+\+\+\+\+)').split(code)
-    for i, v in enumerate(temp):
-        if v == '' or v == ' ':  # enlever les vides
-            del temp[i]
-    return ' '.join(temp)
-
-
-def retour_ligne(code: str) -> str:
-    """Place des retours à la ligne pour rendre plus lisible"""
-    c = list(code)  # split tous les caractères
-    for i, char in enumerate(c):
-        if char in ['.', ',', '[', ']']:
-            if char in ['[', ']']:
-                c[i] = f'\n{char}\n'
-            else:
-                c[i] = f'{char}\n'
-    return ''.join(c)
-
-
-def finitions(code: str) -> str:
-    return '\n'.join([x.strip() for x in code.splitlines()])  # strip les lignes
-
-
-def sauvegarder(code: str) -> None:
-    try:
-        with open(fichier, 'w') as fic:
-            print(content['commentaires'])
-            content['commentaires'] = ''.join(content['commentaires'])
-            if content['commentaires'] != '':
-                x = content['commentaires'].find('## Commentaires')  # index si il trouve, -1 sinon
-                if x == -1:
-                    code = code + "\n\n## Commentaires (Anciennes lignes) ##\n" + content['commentaires']
+    def retour_ligne(self) -> None:
+        """Place des retours à la ligne pour rendre plus lisible"""
+        c = list(self._content['code'])  # split tous les caractères
+        for i, char in enumerate(c):
+            if char in ['.', ',', '[', ']']:
+                if char in ['[', ']']:
+                    c[i] = f'\n{char}\n'
                 else:
-                    code = code + "\n\n" + content['commentaires']
-            fic.write(code)
-            print('Votre fichier a bien ete optimise !')
-    except FileNotFoundError:
-        print(f'Le fichier {fichier} est introuvable')
+                    c[i] = f'{char}\n'
+        self._content['code'] = ''.join(c)
 
+    def finitions(self) -> None:
+        self._content['code'] = '\n'.join([x.strip() for x in self._content['code'].splitlines()])  # strip les lignes
 
-def separer(contenant: str) -> dict:
-    d = {'code': '', 'commentaires': ''}
-    print("Separation du code et des commentaires...")
-    for cpt, ligne in enumerate(contenant.splitlines()):
-        if ligne.strip().startswith('##'):
-            d['commentaires'] = "\n".join(contenant.splitlines()[cpt:])
-            break
-        for index, c in enumerate(ligne):
-            if c in ['.', ',', '[', ']', '<', '>', '+', '-']:
-                d['code'] += c
-            elif c == "#":
-                d['commentaires'] += f'Ligne {cpt + 1}:{ligne[index + 1:]}\n'
+    def sauvegarder(self) -> None:
+        try:
+            with open(self._fichier, 'w') as fic:
+                self._content['commentaires'] = ''.join(self._content['commentaires'])
+                code = ''
+                if self._content['commentaires'] != '':
+                    if self._content['commentaires'].find('## Commentaires') == -1:  # index si il trouve, -1 sinon
+                        code = self._content['code'] + \
+                               "\n\n## Commentaires (Anciennes lignes) ##\n" + self._content['commentaires']
+                    else:
+                        code = self._content['code'] + "\n\n" + self._content['commentaires']
+                fic.write(code)
+                print('Votre fichier a bien ete optimise !')
+        except FileNotFoundError:
+            print(f'Le fichier {self._fichier} est introuvable')
+
+    def separer(self, contenant: str) -> None:
+        print("Separation du code et des commentaires...")
+        for cpt, ligne in enumerate(contenant.splitlines()):
+            if ligne.strip().startswith('##'):
+                self._content['commentaires'] = "\n".join(contenant.splitlines()[cpt:])
                 break
-            else:
-                continue
-    return d
-    
+            for index, c in enumerate(ligne):
+                if c in ['.', ',', '[', ']', '<', '>', '+', '-']:
+                    self._content['code'] += c
+                elif c == "#":
+                    self._content['commentaires'] += f'Ligne {cpt + 1}:{ligne[index + 1:]}\n'
+                    break
+                else:
+                    continue
 
-def executer(fl=None) -> None:
-    from menu import lire, formatter_nom_fichier
-    global fichier, content
-    fichier = formatter_nom_fichier(fl if fl else input('Quel fichier voulez-vous optimiser ? '))
-    content = separer(lire(fichier))
-    optimiser(content['code'])
-
-    # TODO: pouvoir choisir ce qu'on veut optimiser
-    # TODO: ne pas supprimer les commentaires
     # TODO: mettre les opérations effectuées dans un logs.txt
 
 
@@ -85,4 +79,4 @@ if __name__ == '__main__':
     from sys import argv
     from constants import DEFAULT_PATH, DEFAULT_FOLDER
 
-    executer(DEFAULT_FOLDER + argv[1] if len(argv) > 1 else DEFAULT_PATH)
+    Optimiseur(DEFAULT_FOLDER + argv[1] if len(argv) > 1 else DEFAULT_PATH).executer()
